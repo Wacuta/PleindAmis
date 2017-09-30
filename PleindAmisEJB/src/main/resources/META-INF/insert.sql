@@ -1,0 +1,1 @@
+insert into Personne values('a',null,'a','a');
