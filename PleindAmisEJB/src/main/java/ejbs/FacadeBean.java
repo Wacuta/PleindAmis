@@ -1,5 +1,7 @@
 package ejbs;
 
+import entities.MessageMur;
+import entities.MessagePrive;
 import entities.Personne;
 
 import javax.ejb.Stateless;
@@ -19,13 +21,13 @@ public class FacadeBean implements Facade{
     }
 
     @Override
-    public String createPersonne(String l, String p, String n) {
+    public Personne createPersonne(String l, String p, String n) {
         if(em.find(Personne.class, l) == null){
             return null;
         } else {
             Personne per = new Personne(l, p, n);
             em.persist(per);
-            return per.getLoginPers();
+            return per;
         }
     }
 
@@ -34,18 +36,19 @@ public class FacadeBean implements Facade{
         Personne courant = null;
         try {
             courant = (Personne) em
-                    .createQuery("From Personne p where loginPers=?1 and passPers=?2")
+                    .createQuery("From Personne p where p.loginPers=?1 and p.passwdPers=?2")
                     .setParameter(1, l)
                     .setParameter(2, p)
                     .getSingleResult();
         } catch (Exception e) {
+            System.out.println(e);
         }
         return courant;
     }
 
     @Override
     public Personne getPersonne(String l) {
-        return null;
+        return em.find(Personne.class, login);
     }
 
     @Override
@@ -61,5 +64,24 @@ public class FacadeBean implements Facade{
     @Override
     public List<Personne> getNonAmis(String l) {
         return null;
+    }
+
+    @Override
+    public void ecrireMessage(String emet, String dest, String message, Boolean prive) {
+        Personne user = getPersonne(emet);
+        Personne p = getPersonne(dest);
+        if(user != null && p != null) {
+            if(prive){
+                MessagePrive mp = new MessagePrive(message);
+                em.persist(mp);
+                user.getMpEnvoyes().add(mp);
+                p.getMpRecus().add(mp);
+            } else {
+                MessageMur mm = new MessageMur(message);
+                em.persist(mm);
+                user.getMpEnvoyes().add(mm);
+                p.getMpRecus().add(mm);
+            }
+        }
     }
 }

@@ -1,1 +1,1 @@
-insert into Personne values('a',null,'a','a');
+insert into Personne values('wacuta',null,'max','mdp'), ('admin',null,'admin','admin');

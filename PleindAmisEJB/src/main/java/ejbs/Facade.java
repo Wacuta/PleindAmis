@@ -10,10 +10,12 @@ import java.util.List;
  */
 @Local
 public interface Facade {
-    public String createPersonne(String l, String p, String n);
+    public Personne createPersonne(String l, String p, String n);
     public Personne connectPersonne(String l, String p);
     public Personne getPersonne(String l);
     public List<Personne> getAllInscrits();
     public List<Personne> getAmis(String l);
     public List<Personne> getNonAmis(String l);
+
+    public void ecrireMessage(String user, String ami, String message, Boolean prive);
 }

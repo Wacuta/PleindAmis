@@ -11,10 +11,13 @@
         <title>Title</title>
     </head>
     <body>
-        <a href="">inscription</a>
+
         <form>
             <label for="login">Login</label>
             <input type="text" id="login" name="login">
+
+            <label for="nom">Nom</label>
+            <input type="text" id="nom" name="nom">
 
             <label for="pass">Password</label>
             <input type="text" id="pass" name="pass">

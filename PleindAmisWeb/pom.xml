@@ -16,16 +16,14 @@
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
 
+    <packaging>
+        war
+    </packaging>
     <dependencies>
         <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>jstl</artifactId>
-            <version>1.2</version>
-        </dependency>
-        <dependency>
-            <groupId>org.wildfly</groupId>
-            <artifactId>wildfly-weld</artifactId>
-            <version>${version.wildfly}</version>
+            <groupId>javax</groupId>
+            <artifactId>javaee-web-api</artifactId>
+            <version>7.0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

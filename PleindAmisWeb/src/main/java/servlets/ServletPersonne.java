@@ -1,6 +1,7 @@
 package servlets;
 
 import ejbs.Facade;
+import entities.Personne;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -27,12 +28,27 @@ public class ServletPersonne extends HttpServlet {
         } else {
             if(action.equals("connexion")) {
                 String login = request.getParameter("login");
+                String pass = request.getParameter("pass");
+                Personne user = facade.connectPersonne(login, pass);
+
+                if(user != null){
+                    request.getSession().setAttribute("user", user);
+                    request.getSession().setAttribute("listUser", facade.getNonAmis(user.getLoginPers()));
+                    request.getRequestDispatcher("/WEB-INF/amis.jsp").forward(request,response);
+                } else {
+                    request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request,response);
+                }
+
+
+            }
+            if(action.equals("inscription")){
+                String login = request.getParameter("login");
                 String nom = request.getParameter("nom");
                 String pass = request.getParameter("pass");
-                String user = facade.createPersonne(login, nom, pass);
+                Personne user = facade.createPersonne(login, pass, nom);
 
                 request.getSession().setAttribute("user", user);
-                request.getSession().setAttribute("listUser", facade.getNonAmis(user));
+                request.getSession().setAttribute("listUser", facade.getNonAmis(user.getLoginPers()));
                 request.getRequestDispatcher("/WEB-INF/amis.jsp").forward(request,response);
             }
             /**
@@ -42,14 +58,15 @@ public class ServletPersonne extends HttpServlet {
 
              request.getRequestDispatcher("/WEB-INF/amis.jsp").forward(request,response);
              }
+             *//
              if(action.equals("mmAmi")){
-             String loginAmi = request.getParameter("loginAmi");
-             String message = request.getParameter("message");
+                 String loginAmi = request.getParameter("loginAmi");
+                 String message = request.getParameter("message");
 
-             MessageMur m = facade.ecrireMessageMur(user.getLoginPers(), loginAmi, message);
-             request.getRequestDispatcher("/WEB-INF/amis.jsp").forward(request,response);
+                 facade.ecrireMessageMur(user.getLoginPers(), loginAmi, message);
+                 request.getRequestDispatcher("/WEB-INF/amis.jsp").forward(request,response);
              }
-             **/
+
         }
 
     }

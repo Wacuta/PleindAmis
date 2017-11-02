@@ -13,7 +13,7 @@ public class MessageMur {
     private String textMM;
     private Date dateMM;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     public List<Personne> aime;
 
     @ManyToOne

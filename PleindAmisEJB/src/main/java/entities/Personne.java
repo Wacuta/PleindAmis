@@ -14,19 +14,19 @@ public class Personne {
     private String nomPers;
     private Date lastLogin;
 
-    @OneToMany(mappedBy = "emetteur", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "emetteur", cascade = CascadeType.ALL)
     private List<MessagePrive> mpEnvoyes;
-    @OneToMany(mappedBy = "destinataire")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "destinataire")
     private List<MessagePrive> mpRecus;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Personne> amis;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     public List<MessageMur> aiment;
 
-    @OneToMany(mappedBy = "emetteur", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "emetteur", cascade = CascadeType.ALL)
     private List<MessageMur> mmEnvoyes;
-    @OneToMany(mappedBy = "destinataire")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "destinataire")
     private List<MessageMur> mmRecus;
 
 
